@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Log in | Free Api Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/templates/login-style.css">
+</head>
+<body>
+
+<header class="header">
+    <div></div>
+
+    <!-- Site logo + name. Image: icon_image.png in the project root -->
+    <a class="brand" href="/">
+        <img class="brand__logo" src="/images/icon_image.png" alt="">
+        Free Api Hub
+    </a>
+
+    <!-- Login / register. Image: auth_image.png in the project root -->
+    <a class="auth" href="/register.html" aria-label="Log in or register">
+        <img class="auth__image" src="/images/auth_image.png" alt="">
+    </a>
+</header>
+
+<main class="main">
+    <form class="form" action="/login" method="post">
+        <h1 class="form__title">Welcome back</h1>
+        <p class="form__subtitle">Log in to your Free Api Hub account.</p>
+
+        <div class="field">
+            <label class="field__label" for="email">Email</label>
+            <input class="field__input" type="email" id="email" name="email"
+                   placeholder="you@example.com" required autocomplete="email">
+        </div>
+
+        <div class="field">
+            <label class="field__label" for="password">Password</label>
+            <input class="field__input" type="password" id="password" name="password"
+                   placeholder="Your password" required autocomplete="current-password">
+        </div>
+
+        <button class="form__button" type="submit">Log in</button>
+
+        <p class="form__switch">Don't have an account? <a href="/register.html">Sign up</a></p>
+    </form>
+</main>
+
+<footer class="footer">
+    <span>&copy; 2026 Free Api Hub</span>
+    <nav class="footer__links">
+        <a href="#">About</a>
+        <a href="#">Submit an API</a>
+        <a href="#">GitHub</a>
+        <a href="#">Contact</a>
+    </nav>
+</footer>
+
+</body>
+</html>

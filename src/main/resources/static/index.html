@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Free Api Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/templates/index-style.css">
+</head>
+<body>
+
+<header class="header">
+    <div></div>
+
+    <!-- Site logo + name. Image: icon_image.png in the project root -->
+    <a class="brand" href="/">
+        <img class="brand__logo" src="/images/icon_image.png" alt="">
+        Free Api Hub
+    </a>
+
+    <!-- Login / register. Image: auth_image.png in the project root -->
+    <a class="auth" href="/register.html" aria-label="Log in or register">
+        <img class="auth__image" src="/images/auth_image.png" alt="">
+    </a>
+</header>
+
+<main class="main">
+    <h1 class="main__title">Browse free APIs</h1>
+    <p class="main__subtitle">Public APIs you can call right now, with the auth requirement shown up front.</p>
+
+    <section class="cards">
+
+        <!-- ===== CARD START (copy this whole block for a new API) ===== -->
+        <article class="card">
+            <div class="card__top">
+                <h2 class="card__title">Api Card Example</h2>
+                <span class="badge badge--ok">Key Info</span>
+            </div>
+            <p class="card__text">Description</p>
+            <a class="card__docs" href="#" target="_blank" rel="noopener">
+          <span class="card__docs-label">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B50F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4C5 4 5 6 5 8s0 3-2 4c2 1 2 2 2 4s0 4 3 4M16 4c3 0 3 2 3 4s0 3 2 4c-2 1-2 2-2 4s0 4-3 4"/></svg>
+            Swagger docs
+          </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B50F0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </a>
+            <div class="card__format">Format Type</div>
+        </article>
+        <!-- ===== CARD END ===== -->
+
+    </section>
+</main>
+
+<footer class="footer">
+    <span>&copy; 2026 Free Api Hub</span>
+    <nav class="footer__links">
+        <a href="#">About</a>
+        <a href="#">Submit an API</a>
+        <a href="#">GitHub</a>
+        <a href="#">Contact</a>
+    </nav>
+</footer>
+
+</body>
+</html>
