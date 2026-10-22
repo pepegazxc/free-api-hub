@@ -3,7 +3,7 @@
 - Added **Authentication service** and **Gateway**.
 - The file **Start.md**  has been edited:
     
-    `Configuration of the file application.yaml no longer DevOps responsibility.`
+    `Configuration of the application.yaml file is no longer within the scope of DevOps responsibilities.`
 
 ---
 
