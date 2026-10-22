@@ -5,4 +5,11 @@
     
     `Configuration of the file application.yaml no longer DevOps responsibility.`
 
+---
+
+### *To DevOps*
+  - You should create your own git branch
+
+---
+
 *DON'T FORGET TO DO THE PULL AND FETCH COMMAND BEFORE STARTING WORK ON THE PROJECT*
