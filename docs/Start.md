@@ -31,3 +31,4 @@
 6. JWT token
 7. Exception handler
 8. Api Documentation (Swagger)
+9. Application yaml
