@@ -1,0 +1,28 @@
+server:
+  port: 8081
+
+spring:
+
+  # DATABASE CONFIGURATION
+  datasource:
+    url: jdbc:postgresql://localhost:5432/registration_db
+    password: 1234
+    username: user
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-timeout: 20000
+      max-lifetime: 1800000
+      idle-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_updates: true
+        order_inserts: true
+    show_sql: false
+    open-in-view: false
