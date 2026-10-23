@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign up | Free Api Hub</title>
+    <title>Log in | Free Api Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/templates/register-style.css">
+    <link rel="stylesheet" href="/login-style.css">
 </head>
 <body>
 
@@ -21,21 +21,15 @@
     </a>
 
     <!-- Login / register. Image: auth_image.png in the project root -->
-    <a class="auth" href="/register.html" aria-label="Log in or register">
+    <a class="auth" href="/templates/register.html" aria-label="Log in or register">
         <img class="auth__image" src="/images/auth_image.png" alt="">
     </a>
 </header>
 
 <main class="main">
-    <form class="form" action="/register" method="post">
-        <h1 class="form__title">Create account</h1>
-<!--        <p class="form__subtitle">Sign up to save your favorite APIs.</p>-->
-
-        <div class="field">
-            <label class="field__label" for="username">Username</label>
-            <input class="field__input" type="text" id="username" name="username"
-                   placeholder="yourname" minlength="3" maxlength="30" required autocomplete="username">
-        </div>
+    <form class="form" action="/login" method="post">
+        <h1 class="form__title">Welcome back</h1>
+        <p class="form__subtitle">Log in to your Free Api Hub account.</p>
 
         <div class="field">
             <label class="field__label" for="email">Email</label>
@@ -46,13 +40,12 @@
         <div class="field">
             <label class="field__label" for="password">Password</label>
             <input class="field__input" type="password" id="password" name="password"
-                   placeholder="At least 8 characters" minlength="8" required autocomplete="new-password">
-            <p class="field__hint">Use 8 or more characters.</p>
+                   placeholder="Your password" required autocomplete="current-password">
         </div>
 
-        <button class="form__button" type="submit">Sign up</button>
+        <button class="form__button" type="submit">Log in</button>
 
-        <p class="form__switch">Already have an account? <a href="/login.html">Log in</a></p>
+        <p class="form__switch">Don't have an account? <a href="register.html">Sign up</a></p>
     </form>
 </main>
 
