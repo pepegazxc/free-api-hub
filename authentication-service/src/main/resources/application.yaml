@@ -5,8 +5,7 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
-# DATA CONFIGURATION
-spring:
+  # DATA CONFIGURATION
   datasource:
     url: jdbc:postgresql://localhost:5433/site_db
     username: ${DB_USERNAME}
