@@ -9,8 +9,8 @@ spring:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/site_db
-    username: ${site_db}
-    password: ${4321PepeShneyne}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 
     hikari:

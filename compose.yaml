@@ -5,9 +5,9 @@ services:
     restart: always
 
     environment:
-      POSTGRES_DB: site_db
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: 4321PepeShneyne
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
 
     ports:
       - "5433:5432"
