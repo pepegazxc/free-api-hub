@@ -2,12 +2,17 @@ server:
   port: 8081
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
 
-  # DATABASE CONFIGURATION
+# DATA CONFIGURATION
+spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/registration_db
-    password: 1234
-    username: user
+    url: jdbc:postgresql://localhost:5433/site_db
+    username: ${site_db}
+    password: ${4321PepeShneyne}
+
+
     hikari:
       maximum-pool-size: 5
       minimum-idle: 2
