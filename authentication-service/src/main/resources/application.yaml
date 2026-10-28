@@ -30,3 +30,17 @@ spring:
         order_inserts: true
     show_sql: false
     open-in-view: false
+
+app:
+  hash:
+    hmac-key: ${HMAC_KEY}
+
+jasypt:
+  encryptor:
+    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
+    iv-generator-classname: org.jasypt.iv.RandomIvGenerator
+    algorithm: ${JASYPT_ALGORITHM}
+    password: ${JASYPT_PASSWORD}
+    key-obtention-iterations: 10000
+    pool-size: 1
+    string-output-type: base64

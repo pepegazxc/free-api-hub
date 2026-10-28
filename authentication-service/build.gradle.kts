@@ -30,6 +30,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("org.postgresql:postgresql")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
 }
 
 tasks.withType<Test> {
