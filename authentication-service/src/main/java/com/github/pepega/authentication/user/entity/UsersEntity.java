@@ -26,4 +26,8 @@ public class UsersEntity {
 
     @Column(name = "hash_password", nullable = false, columnDefinition = "TEXT")
     private String hashPassword;
+
+    @Column(name = "hash_email", nullable = false, unique = true)
+    private String hashCipher;
+
 }
