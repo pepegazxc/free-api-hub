@@ -28,6 +28,6 @@ public class UsersEntity {
     private String hashPassword;
 
     @Column(name = "hash_email", nullable = false, unique = true)
-    private String hashCipher;
+    private String hashEmail;
 
 }

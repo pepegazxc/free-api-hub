@@ -18,6 +18,7 @@ public class AuthService {
     private final UsersRepository usersRepository;
     private final StringEncryptor encryptor;
     private final PasswordEncoder passwordEncoder;
+    private final HashService hashService;
 
     @Transactional
     public void addNewUser(RegistrationRequest request){
@@ -25,6 +26,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .cipherEmail(encryptor.encrypt(request.getEmail()))
                 .hashPassword(passwordEncoder.encode(request.getPassword()))
+                .hashEmail(hashService.hash(request.getEmail()))
                 .build();
 
         usersRepository.save(user);
