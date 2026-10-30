@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-  - name: Repository clone
-    uses: actions/chekout@v3
+      - name: Repository clone
+        uses: actions/chekout@v3
 
 
-  name: Say smth
-  run: echo "The test was succesfull passed!"
+      - name: Say smth
+        run: echo "The test was succesfull passed!"
 
-- name: Show date
-  run: date
+      - name: Show date
+        run: date
