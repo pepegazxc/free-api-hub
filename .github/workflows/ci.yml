@@ -12,11 +12,11 @@ jobs:
 
     steps:
       - name: Repository clone
-        uses: actions/chekout@v3
+        uses: actions/checkout@v3
 
 
       - name: Say smth
-        run: echo "The test was succesfull passed!"
+        run: echo "The test was successfully passed!"
 
       - name: Show date
         run: date
