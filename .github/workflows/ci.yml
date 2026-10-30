@@ -1,0 +1,22 @@
+name: CI test for code
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  first-tests:
+    runs-on: ubuntu-22.04
+
+    steps:
+  - name: Repository clone
+    uses: actions/chekout@v3
+
+
+  name: Say smth
+  run: echo "The test was succesfull passed!"
+
+- name: Show date
+  run: date
