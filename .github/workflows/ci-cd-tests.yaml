@@ -9,7 +9,6 @@ on:
 jobs:
   authenticationTest:
     runs-on: ubuntu-22.04
-     
     steps:
       - name: Repository clone
         uses: actions/checkout@v4
