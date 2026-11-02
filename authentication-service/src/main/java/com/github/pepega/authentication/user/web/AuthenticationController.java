@@ -1,4 +1,4 @@
-package com.github.pepega.authentication.user.controller;
+package com.github.pepega.authentication.user.web;
 
 import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.service.AuthService;

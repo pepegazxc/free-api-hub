@@ -35,6 +35,13 @@ app:
   hash:
     hmac-key: ${HMAC_KEY}
 
+jwt:
+  issuer: auth-service
+  access-ttl: 15m
+  refresh-ttl: 30d
+  private-key: ${PRIVATE_JWT_KEY}
+  public-key: ${PUBLIC_JWT_KEY}
+
 jasypt:
   encryptor:
     salt-generator-classname: org.jasypt.salt.RandomSaltGenerator

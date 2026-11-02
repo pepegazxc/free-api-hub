@@ -1,3 +1,5 @@
+## Don't forget about configure mem limits
+
 services:
   postgres:
     image: postgres:16-alpine
