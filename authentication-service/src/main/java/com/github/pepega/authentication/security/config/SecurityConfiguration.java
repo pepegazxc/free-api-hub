@@ -1,6 +1,6 @@
 package com.github.pepega.authentication.security.config;
 
-import com.github.pepega.authentication.security.jwt.JwtFilter;
+import com.github.pepega.authentication.security.jwt.JwtAuthenticationFilter;
 import com.github.pepega.authentication.security.jwt.JwtVerifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 )                .exceptionHandling(e -> e
                         .authenticationEntryPoint(
                                 new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .addFilterBefore(new JwtFilter(jwtVerifier),
+                .addFilterBefore(new JwtAuthenticationFilter(jwtVerifier),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
 
