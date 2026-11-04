@@ -2,10 +2,7 @@ package com.github.pepega.authentication.security.jwt;
 
 import com.github.pepega.authentication.security.model.TokenPayload;
 import com.github.pepega.authentication.security.model.TokenType;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import org.junit.jupiter.api.*;
 import com.github.pepega.authentication.security.config.JwtProperties;
 
@@ -121,6 +118,50 @@ public class JwtVerifierTest {
     @Test
     public void accessToken_failed_shouldReturnExceptionBecauseOfIncorrectType() {
         String token = sign(validToken());
+
+        assertThrows(IllegalStateException.class,
+                () -> jwtVerifier.parse(token, TokenType.REFRESH_TOKEN));
+    }
+
+    @Test
+    public void accessToken_failed_shouldReturnExceptionBecauseOfForeignSignKey(){
+        String token = sign(validToken()
+                .issuer("evil"));
+
+        assertThrows(IllegalStateException.class,
+                () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
+    }
+
+    @Test
+    public void accessToken_failed_shouldReturnExceptionBecauseOfIncorrectSubject(){
+        String token = sign(validToken()
+                .subject("evil"));
+
+        assertThrows(IllegalStateException.class,
+                () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
+    }
+
+    @Test
+    public void accessToken_failed_shouldReturnExceptionBecauseOfInvalidToken(){
+        String token = "test";
+
+        assertThrows(IllegalStateException.class,
+                () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
+    }
+
+    @Test
+    public void accessToken_failed_shouldReturnExceptionBecauseOfWrongTokenType(){
+        String token = sign(validToken()
+                .claim("token_type", "ACCESS_TOKEN"));
+
+        assertThrows(IllegalStateException.class,
+                () -> jwtVerifier.parse(token, TokenType.REFRESH_TOKEN));
+    }
+
+    @Test
+    public void accessToken_failed_shouldReturnExceptionBecauseOfForeignSign(){
+        String token = sign(validToken()
+                .signWith(foreignKeys.getPrivate()));
 
         assertThrows(IllegalStateException.class,
                 () -> jwtVerifier.parse(token, TokenType.REFRESH_TOKEN));
