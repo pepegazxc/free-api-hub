@@ -4,32 +4,21 @@ import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @Slf4j
-@RequestMapping("/auth")
+@RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthService authService;
 
-    @GetMapping("/registration")
-    public String returnRegistrationPage(){
-        return "register";
-    }
-
     @PostMapping("/registration")
-    public String registration(@Valid @ModelAttribute RegistrationRequest request,
-                               BindingResult result){
+    public String registration(@Valid @RequestBody RegistrationRequest request){
         log.info("Registering user: {}", request);
 
-        if (result.hasErrors()){
-            return "index";
-        }
         authService.addNewUser(request);
-        return "redirect:/index";
+        return "";
     }
 }
