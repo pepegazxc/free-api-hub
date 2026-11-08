@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS user_schema.users(
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
 
-    status VARCHAR(25) NOT NULl DEFAULT 'ACTIVE'
+    status VARCHAR(25) NOT NULL DEFAULT 'ACTIVE'
     CHECK( status in ('ACTIVE' , 'BLOCKED'))
 
 );

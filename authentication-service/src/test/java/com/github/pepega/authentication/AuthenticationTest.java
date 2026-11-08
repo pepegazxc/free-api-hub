@@ -1,7 +1,7 @@
 package com.github.pepega.authentication;
 
 import com.github.pepega.authentication.user.dto.RegistrationRequest;
-import com.github.pepega.authentication.user.entity.UsersEntity;
+import com.github.pepega.authentication.user.entity.UserEntity;
 import com.github.pepega.authentication.user.repository.UsersRepository;
 import com.github.pepega.authentication.user.service.AuthService;
 import com.github.pepega.authentication.user.service.HashService;
@@ -41,9 +41,9 @@ public class AuthenticationTest {
 
         authService.addNewUser(request);
 
-        ArgumentCaptor<UsersEntity> captor = ArgumentCaptor.forClass(UsersEntity.class);
+        ArgumentCaptor<UserEntity> captor = ArgumentCaptor.forClass(UserEntity.class);
         verify(usersRepository).save(captor.capture());
-        UsersEntity saved = captor.getValue();
+        UserEntity saved = captor.getValue();
 
         assertEquals("test", saved.getUsername());
         assertEquals("hash", saved.getHashEmail());
