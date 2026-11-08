@@ -6,7 +6,6 @@ import com.github.pepega.authentication.user.repository.UsersRepository;
 import com.github.pepega.authentication.user.service.AuthService;
 import com.github.pepega.authentication.user.service.HashService;
 import org.jasypt.encryption.StringEncryptor;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

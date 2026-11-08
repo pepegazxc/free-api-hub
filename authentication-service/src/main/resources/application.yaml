@@ -5,6 +5,9 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
+  main:
+    banner-mode: off
+
   # DATA CONFIGURATION
   datasource:
     url: jdbc:postgresql://localhost:5433/site_db
