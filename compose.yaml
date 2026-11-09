@@ -1,5 +1,6 @@
 ## Don't forget about configure mem limits
 
+#Postgres Data Base;
 services:
   postgres:
     image: postgres:16-alpine
@@ -17,5 +18,17 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+    #Redis Data Base
+  redis:
+    image: redis:alpine
+    container_name: redis-container
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
 volumes:
   pgdata:
+  redis_data:
+
