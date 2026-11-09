@@ -1,5 +1,6 @@
 package com.github.pepega.authentication.user.service;
 
+import com.github.pepega.authentication.exception.exceptions.HashException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -22,15 +23,13 @@ public class HashService {
         this.key = new SecretKeySpec(hmacKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
     }
 
-    public String hash(String value){
+    public byte[] hash(String value){
         try{
-            String normalized = value.trim().toLowerCase(Locale.ROOT);
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(key);
-            return HexFormat.of().formatHex(mac.doFinal(normalized.getBytes(StandardCharsets.UTF_8)));
+            return HexFormat.of().formatHex(mac.doFinal(value.getBytes(StandardCharsets.UTF_8))).getBytes();
         }catch (GeneralSecurityException e){
-            log.error("An error occurred while hashing={}", e.getMessage());
-            throw new IllegalStateException(e);
+            throw new HashException(e);
         }
     }
 }

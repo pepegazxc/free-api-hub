@@ -28,11 +28,11 @@ public class AuthService {
         String normalizedEmail = normalizeString(request.email());
 
         String cipherEmail = encryptor.encrypt(normalizedEmail);
-        String hashEmail = hashService.hash(normalizedEmail);
+        byte[] hashEmail = hashService.hash(normalizedEmail);
 
         UserEntity user = UserEntity.register(
                 normalizeString(request.username()),
-                hashEmail.getBytes(StandardCharsets.UTF_8),
+                hashEmail,
                 cipherEmail.getBytes(StandardCharsets.UTF_8),
                 passwordEncoder.encode(request.password())
         );
