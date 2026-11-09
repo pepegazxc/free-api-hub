@@ -20,7 +20,7 @@ services:
 
     #Redis Data Base
   redis:
-    image: redis:alpine
+    image: redis:7-alpine3.24
     container_name: redis-container
     restart: always
     ports:
