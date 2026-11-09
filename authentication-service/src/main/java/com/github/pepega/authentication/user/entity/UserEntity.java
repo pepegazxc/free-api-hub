@@ -17,13 +17,14 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
+    private static final int MAX_USERNAME_LENGTH = 50;
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
-    @Column(name = "username", nullable = false, unique = true, length = 50)
+    @Column(name = "username", nullable = false, unique = true, length = MAX_USERNAME_LENGTH)
     private String username;
 
     @Column(name = "hash_email", nullable = false, unique = true)
@@ -50,5 +51,33 @@ public class UserEntity {
     @Column(name = "status", nullable = false, length = 25)
     private ProfileStatus status = ProfileStatus.ACTIVE;
 
-    //TO DO: Create methods for entity
+    public static UserEntity register(String username,
+                                      byte[] hashEmail,
+                                      byte[] cipherEmail,
+                                      String hashPassword){
+        if (username == null || username.isBlank() || username.length() > MAX_USERNAME_LENGTH){
+            throw new IllegalStateException();
+        }
+
+        if (hashPassword != null && hashPassword.isBlank()){
+            throw new IllegalStateException();
+        }
+
+        requiredNotEmpty(hashEmail ,"hashEmail");
+        requiredNotEmpty(cipherEmail, "cipherEmail");
+
+        UserEntity user = new UserEntity();
+        user.username = username;
+        user.hashEmail = hashEmail;
+        user.cipherEmail = cipherEmail;
+        user.hashPassword = hashPassword;
+        user.status = ProfileStatus.ACTIVE;
+        return user;
+    }
+
+    private static void requiredNotEmpty(byte[] value, String name){
+        if ( value == null || value.length == 0){
+            throw new IllegalStateException(name + " must be not empty");
+        }
+    }
 }

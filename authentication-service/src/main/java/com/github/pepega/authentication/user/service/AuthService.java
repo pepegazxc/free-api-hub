@@ -10,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -21,15 +24,25 @@ public class AuthService {
     private final HashService hashService;
 
     @Transactional
-    public void addNewUser(RegistrationRequest request){
-//        UserEntity user = UserEntity.builder()
-//                .username(request.getUsername())
-//                .cipherEmail(encryptor.encrypt(request.getEmail()))
-//                .hashPassword(passwordEncoder.encode(request.getPassword()))
-//                .hashEmail(hashService.hash(request.getEmail()))
-//                .build();
-//
-//        usersRepository.save(user);
-//        log.info("User registered, userId={}", user.getId());
+    public void register(RegistrationRequest request){
+        String normalizedEmail = normalizeString(request.email());
+
+        String cipherEmail = encryptor.encrypt(normalizedEmail);
+        String hashEmail = hashService.hash(normalizedEmail);
+
+        UserEntity user = UserEntity.register(
+                normalizeString(request.username()),
+                hashEmail.getBytes(StandardCharsets.UTF_8),
+                cipherEmail.getBytes(StandardCharsets.UTF_8),
+                passwordEncoder.encode(request.password())
+        );
+
+        usersRepository.saveAndFlush(user);
+
+        log.info("User registered, userId={}", user.getId());
+    }
+
+    private String normalizeString(String value){
+        return value.trim().toLowerCase(Locale.ROOT);
     }
 }

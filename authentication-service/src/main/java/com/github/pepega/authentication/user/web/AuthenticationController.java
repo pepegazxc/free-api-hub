@@ -18,7 +18,7 @@ public class AuthenticationController {
     public String registration(@Valid @RequestBody RegistrationRequest request){
         log.info("Registering user: {}", request);
 
-        authService.addNewUser(request);
+        authService.register(request);
         return "";
     }
 }
