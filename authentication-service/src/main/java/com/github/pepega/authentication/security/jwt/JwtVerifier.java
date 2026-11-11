@@ -1,5 +1,7 @@
 package com.github.pepega.authentication.security.jwt;
 
+import com.github.pepega.authentication.exception.exceptions.InvalidTokenException;
+import com.github.pepega.authentication.exception.exceptions.WrongTokenTypeException;
 import com.github.pepega.authentication.security.model.TokenPayload;
 import com.github.pepega.authentication.security.model.TokenType;
 import com.github.pepega.authentication.security.config.JwtProperties;
@@ -7,11 +9,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.security.PublicKey;
 
 @Component
+@Slf4j
 public class JwtVerifier {
 
     private final JwtParser parser;
@@ -30,10 +34,10 @@ public class JwtVerifier {
 
             String type = claims.get(TokenType.CLAIM, String.class);
             if (!expectedType.name().equals(type)){
-                throw new IllegalStateException("Wrong token type");
+                throw new WrongTokenTypeException("Wrong token type");
             }
             if (claims.getExpiration() == null || claims.getId() == null) {
-                throw new IllegalStateException("Missing exp or jti");
+                throw new InvalidTokenException("Missing exp or jti");
             }
 
             return new TokenPayload(
@@ -42,7 +46,8 @@ public class JwtVerifier {
                     claims.getId()
             );
         } catch (JwtException | IllegalArgumentException e){
-            throw new IllegalStateException("Invalid token", e);
+            log.error("Jwt token exception occurred: message={}", e.getMessage(), e);
+            throw new InvalidTokenException("Invalid token");
         }
     }
 

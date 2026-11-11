@@ -1,5 +1,6 @@
 package com.github.pepega.authentication.user.entity;
 
+import com.github.pepega.authentication.exception.exceptions.EmptyValueException;
 import com.github.pepega.authentication.user.model.ProfileStatus;
 import jakarta.persistence.Entity;
 
@@ -10,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.Instant;
+import java.util.EmptyStackException;
 import java.util.UUID;
 
 @Entity
@@ -56,11 +58,11 @@ public class UserEntity {
                                       byte[] cipherEmail,
                                       String hashPassword){
         if (username == null || username.isBlank() || username.length() > MAX_USERNAME_LENGTH){
-            throw new IllegalStateException();
+            throw new EmptyValueException("Username is required", "username");
         }
 
         if (hashPassword != null && hashPassword.isBlank()){
-            throw new IllegalStateException();
+            throw new EmptyValueException("Password is required", "password");
         }
 
         requiredNotEmpty(hashEmail ,"hashEmail");
@@ -77,7 +79,7 @@ public class UserEntity {
 
     private static void requiredNotEmpty(byte[] value, String name){
         if ( value == null || value.length == 0){
-            throw new IllegalStateException(name + " must be not empty");
+            throw new EmptyValueException(name + " must be not empty", name);
         }
     }
 }

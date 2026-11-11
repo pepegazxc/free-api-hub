@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Locale;
 
 @Service
@@ -27,13 +27,13 @@ public class AuthService {
     public void register(RegistrationRequest request){
         String normalizedEmail = normalizeString(request.email());
 
-        String cipherEmail = encryptor.encrypt(normalizedEmail);
+        byte[] cipherEmail = Base64.getDecoder().decode(encryptor.encrypt(normalizedEmail));
         byte[] hashEmail = hashService.hash(normalizedEmail);
 
         UserEntity user = UserEntity.register(
                 normalizeString(request.username()),
                 hashEmail,
-                cipherEmail.getBytes(StandardCharsets.UTF_8),
+                cipherEmail,
                 passwordEncoder.encode(request.password())
         );
 

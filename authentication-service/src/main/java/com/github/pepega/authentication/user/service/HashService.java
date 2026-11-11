@@ -29,7 +29,7 @@ public class HashService {
             mac.init(key);
             return HexFormat.of().formatHex(mac.doFinal(value.getBytes(StandardCharsets.UTF_8))).getBytes();
         }catch (GeneralSecurityException e){
-            throw new HashException(e);
+            throw new HashException(e, e.getMessage());
         }
     }
 }

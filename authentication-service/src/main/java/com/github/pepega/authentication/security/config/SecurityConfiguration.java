@@ -20,8 +20,12 @@ public class SecurityConfiguration {
                                            JwtVerifier jwtVerifier) throws Exception{
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/v1/auth/registration").permitAll()
+                        .requestMatchers(
+                                "api/v1/auth/registration"
+                        )
+                        .permitAll()
                         .anyRequest().authenticated()
                 )                .exceptionHandling(e -> e
                         .authenticationEntryPoint(
