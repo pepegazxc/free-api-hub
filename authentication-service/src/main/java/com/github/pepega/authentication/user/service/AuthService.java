@@ -1,5 +1,7 @@
 package com.github.pepega.authentication.user.service;
 
+import com.github.pepega.authentication.exception.exceptions.EmailAlreadyExistException;
+import com.github.pepega.authentication.exception.exceptions.UsernameAlreadyExistException;
 import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.entity.UserEntity;
 import com.github.pepega.authentication.user.repository.UsersRepository;
@@ -29,20 +31,27 @@ public class AuthService {
 
         byte[] cipherEmail = Base64.getDecoder().decode(encryptor.encrypt(normalizedEmail));
         byte[] hashEmail = hashService.hash(normalizedEmail);
+        String normalizedUsername = normalizeString(request.username());
+
+        checkForExistences(hashEmail, normalizedUsername);
 
         UserEntity user = UserEntity.register(
-                normalizeString(request.username()),
+                normalizedUsername,
                 hashEmail,
                 cipherEmail,
                 passwordEncoder.encode(request.password())
         );
 
         usersRepository.saveAndFlush(user);
-
         log.info("User registered, userId={}", user.getId());
     }
 
     private String normalizeString(String value){
         return value.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private void checkForExistences(byte[] hashEmail, String username){
+        if(usersRepository.existsByHashEmail(hashEmail)) throw new EmailAlreadyExistException();
+        if(usersRepository.existsByUsername(username)) throw new UsernameAlreadyExistException(username);
     }
 }

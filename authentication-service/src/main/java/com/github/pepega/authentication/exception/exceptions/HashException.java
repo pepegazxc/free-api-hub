@@ -1,5 +1,6 @@
 package com.github.pepega.authentication.exception.exceptions;
 
+import com.github.pepega.authentication.exception.model.ExceptionCode;
 import org.springframework.http.HttpStatus;
 
 public class HashException extends AppException {
@@ -9,7 +10,7 @@ public class HashException extends AppException {
                 "An error occurred while hashing",
                 message,
                 "Hashing error",
-                "HASHING_ERROR"
+                ExceptionCode.HASHING_ERROR
         );
     }
 }

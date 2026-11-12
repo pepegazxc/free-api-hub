@@ -1,5 +1,6 @@
 package com.github.pepega.authentication.exception.exceptions;
 
+import com.github.pepega.authentication.exception.model.ExceptionCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -8,10 +9,10 @@ public abstract class AppException extends RuntimeException {
     private final HttpStatus status;
     private final String publicMessage;
     private final String title;
-    private final String code;
+    private final ExceptionCode code;
 
 
-    protected AppException(HttpStatus status, String publicMessage, String message, String title, String code) {
+    protected AppException(HttpStatus status, String publicMessage, String message, String title, ExceptionCode code) {
         super(message);
         this.status = status;
         this.publicMessage = publicMessage;
@@ -19,7 +20,7 @@ public abstract class AppException extends RuntimeException {
         this.code = code;
     }
 
-    protected AppException(HttpStatus status, String publicMessage, String message, String title, String code, Throwable e) {
+    protected AppException(HttpStatus status, String publicMessage, String message, String title, ExceptionCode code, Throwable e) {
         super(message, e);
         this.status = status;
         this.publicMessage = publicMessage;

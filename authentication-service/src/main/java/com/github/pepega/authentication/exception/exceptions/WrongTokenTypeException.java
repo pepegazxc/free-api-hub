@@ -1,5 +1,6 @@
 package com.github.pepega.authentication.exception.exceptions;
 
+import com.github.pepega.authentication.exception.model.ExceptionCode;
 import org.springframework.http.HttpStatus;
 
 public class WrongTokenTypeException extends AppException {
@@ -9,7 +10,7 @@ public class WrongTokenTypeException extends AppException {
                 message,
                 "Didn't get the correct one token type",
                 "Wrong token type",
-                "WRONG_TOKEN_TYPE"
+                ExceptionCode.WRONG_TOKEN_TYPE
         );
     }
 }

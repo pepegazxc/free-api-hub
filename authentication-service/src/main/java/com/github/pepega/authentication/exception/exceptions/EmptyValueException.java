@@ -1,5 +1,6 @@
 package com.github.pepega.authentication.exception.exceptions;
 
+import com.github.pepega.authentication.exception.model.ExceptionCode;
 import org.springframework.http.HttpStatus;
 
 public class EmptyValueException extends AppException {
@@ -9,7 +10,7 @@ public class EmptyValueException extends AppException {
                 message,
                 value + " cannot be empty",
                 "Empty value",
-                "VALUE_IS_REQUIRED"
+                ExceptionCode.VALUE_IS_REQUIRED
         );
     }
 }
