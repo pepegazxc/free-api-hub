@@ -1,5 +1,7 @@
 package com.github.pepega.authentication.security.jwt;
 
+import com.github.pepega.authentication.exception.exceptions.InvalidTokenException;
+import com.github.pepega.authentication.exception.exceptions.WrongTokenTypeException;
 import com.github.pepega.authentication.security.model.TokenPayload;
 import com.github.pepega.authentication.security.model.TokenType;
 import io.jsonwebtoken.*;
@@ -102,7 +104,7 @@ public class JwtVerifierTest {
         String token = sign(validToken()
                 .claim("token_type", "REFRESH_TOKEN"));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(WrongTokenTypeException.class,
                 () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
     }
 
@@ -111,7 +113,7 @@ public class JwtVerifierTest {
         String token = sign(validToken()
                 .expiration(Date.from(Instant.now().minusSeconds(60))));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(InvalidTokenException.class,
                 () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
     }
 
@@ -119,7 +121,7 @@ public class JwtVerifierTest {
     public void accessToken_failed_shouldReturnExceptionBecauseOfIncorrectType() {
         String token = sign(validToken());
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(WrongTokenTypeException.class,
                 () -> jwtVerifier.parse(token, TokenType.REFRESH_TOKEN));
     }
 
@@ -128,7 +130,7 @@ public class JwtVerifierTest {
         String token = sign(validToken()
                 .issuer("evil"));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(InvalidTokenException.class,
                 () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
     }
 
@@ -137,7 +139,7 @@ public class JwtVerifierTest {
         String token = sign(validToken()
                 .subject("evil"));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(InvalidTokenException.class,
                 () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
     }
 
@@ -145,7 +147,7 @@ public class JwtVerifierTest {
     public void accessToken_failed_shouldReturnExceptionBecauseOfInvalidToken(){
         String token = "test";
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(InvalidTokenException.class,
                 () -> jwtVerifier.parse(token, TokenType.ACCESS_TOKEN));
     }
 
@@ -154,7 +156,7 @@ public class JwtVerifierTest {
         String token = sign(validToken()
                 .claim("token_type", "ACCESS_TOKEN"));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(WrongTokenTypeException.class,
                 () -> jwtVerifier.parse(token, TokenType.REFRESH_TOKEN));
     }
 
@@ -163,7 +165,7 @@ public class JwtVerifierTest {
         String token = sign(validToken()
                 .signWith(foreignKeys.getPrivate()));
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(WrongTokenTypeException.class,
                 () -> jwtVerifier.parse(token, TokenType.REFRESH_TOKEN));
     }
 }

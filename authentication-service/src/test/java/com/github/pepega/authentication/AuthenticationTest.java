@@ -14,6 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,28 +32,30 @@ public class AuthenticationTest {
     AuthService authService;
 
     @Test
-    void shouldSuccessfullyRegisterNewUser(){
-//        RegistrationRequest request = new RegistrationRequest();
-//        request.setEmail("test");
-//        request.setUsername("test");
-//        request.setPassword("test");
-//
-//        when(stringEncryptor.encrypt(anyString())).thenReturn("cipher");
-//        when(passwordEncoder.encode(anyString())).thenReturn("hash");
-//        when(hashService.hash(anyString())).thenReturn("hash");
-//
-//        authService.addNewUser(request);
-//
-//        ArgumentCaptor<UserEntity> captor = ArgumentCaptor.forClass(UserEntity.class);
-//        verify(usersRepository).save(captor.capture());
-//        UserEntity saved = captor.getValue();
-//
-//        assertEquals("test", saved.getUsername());
-//        assertEquals("hash", saved.getHashEmail());
-//        assertEquals("hash", saved.getHashPassword());
-//        assertEquals("cipher", saved.getCipherEmail());
-    }
+    void shouldSuccessfullyRegisterNewUser() {
+        RegistrationRequest request = new RegistrationRequest(
+                "  Test ", "  TEst@X.com ", "secret"
+        );
 
+        byte[] cipherBytes = "cipher".getBytes(StandardCharsets.UTF_8);
+        byte[] emailHash = "email-hash".getBytes(StandardCharsets.UTF_8);
+
+        when(stringEncryptor.encrypt("test@x.com"))
+                .thenReturn(Base64.getEncoder().encodeToString(cipherBytes));
+        when(hashService.hash("test@x.com")).thenReturn(emailHash);
+        when(passwordEncoder.encode("secret")).thenReturn("password-hash");
+
+        authService.register(request);
+
+        ArgumentCaptor<UserEntity> captor = ArgumentCaptor.forClass(UserEntity.class);
+        verify(usersRepository).saveAndFlush(captor.capture());
+        UserEntity saved = captor.getValue();
+
+        assertEquals("test", saved.getUsername());
+        assertArrayEquals(emailHash, saved.getHashEmail());
+        assertArrayEquals(cipherBytes, saved.getCipherEmail());
+        assertEquals("password-hash", saved.getHashPassword());
+    }
 
 
 }

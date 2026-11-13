@@ -24,6 +24,7 @@ dependencies {
 
     // junit and testing
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     //security
     implementation("org.springframework.boot:spring-boot-starter-security")
