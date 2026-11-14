@@ -26,7 +26,6 @@ public class RedisService {
         Boolean saved = redisTemplate.opsForValue()
                 .setIfAbsent(key, hashedToken, jwtProperties.refreshTtl());
         if(Boolean.FALSE.equals(saved)) throw new RefreshTokenAlreadySavedException();
-
         log.info("Saved refresh token userId={}", userId);
     }
 }

@@ -1,6 +1,5 @@
-package com.github.pepega.authentication;
+package com.github.pepega.authentication.user.service;
 
-import com.github.pepega.authentication.user.service.HashService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

@@ -1,10 +1,8 @@
-package com.github.pepega.authentication;
+package com.github.pepega.authentication.user.service;
 
 import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.entity.UserEntity;
 import com.github.pepega.authentication.user.repository.UsersRepository;
-import com.github.pepega.authentication.user.service.AuthService;
-import com.github.pepega.authentication.user.service.HashService;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
