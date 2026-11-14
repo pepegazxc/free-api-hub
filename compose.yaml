@@ -1,9 +1,7 @@
-## Don't forget about configure mem limits
-
-#Postgres Data Base;
+#Postgres Data Base
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     container_name: postgres_db
     restart: always
 
@@ -18,17 +16,32 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-    #Redis Data Base
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${DB_USERNAME} -d $${DB_NAME}"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start-period: 5s
+
+  #Redis Data Base
   redis:
     image: redis:7-alpine3.24
     container_name: redis-container
     restart: always
+
     ports:
       - "6379:6379"
+
     volumes:
       - redis_data:/data
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start-period: 5s
 
 volumes:
   pgdata:
   redis_data:
-
