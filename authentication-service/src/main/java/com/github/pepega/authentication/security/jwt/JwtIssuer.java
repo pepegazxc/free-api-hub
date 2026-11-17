@@ -20,22 +20,22 @@ public class JwtIssuer {
     private final PrivateKey privateKey;
     private final JwtProperties properties;
 
-    public String generateAccessToken(Long userId){
+    public String generateAccessToken(UUID userId){
         return buildToken(userId, TokenType.ACCESS_TOKEN, properties.accessTtl());
     }
 
-    public String generateRefreshToken(Long userId){
+    public String generateRefreshToken(UUID userId){
         return buildToken(userId, TokenType.REFRESH_TOKEN, properties.refreshTtl());
     }
 
-    private String buildToken(Long userId, TokenType tokenType, Duration ttl){
+    private String buildToken(UUID userId, TokenType tokenType, Duration ttl){
         Instant now = Instant.now();
         return Jwts.builder()
                 .header().and().issuer(properties.issuer())
                 .subject(userId.toString())
                 .claims(Map.of(
                         TokenType.CLAIM, tokenType,
-                        "user_id", userId
+                        "user_id", userId.toString()
                 ))
                 .id(UUID.randomUUID().toString())
                 .issuedAt(Date.from(now))

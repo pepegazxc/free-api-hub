@@ -8,6 +8,7 @@ import com.github.pepega.authentication.security.config.JwtProperties;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.time.Duration;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,7 +51,7 @@ public class JwtIssuerTest {
 
         @Test
         public void accessToken_shouldGenerateValidIssuer(){
-            String token = jwtIssuer.generateAccessToken(1L);
+            String token = jwtIssuer.generateAccessToken(UUID.randomUUID());
 
             Claims parsed = parse(token);
 
@@ -59,30 +60,32 @@ public class JwtIssuerTest {
 
         @Test
         public void accessToken_shouldAddUserId(){
-            String token = jwtIssuer.generateAccessToken(1L);
+            UUID id = UUID.randomUUID();
+            String token = jwtIssuer.generateAccessToken(id);
 
             Claims parsed = parse(token);
 
-            assertEquals("1", parsed.getSubject(), "UserId must be equals");
+            assertEquals(id.toString(), parsed.getSubject(), "UserId must be equals");
 
         }
 
         @Test
         public void accessToken_shouldAddCorrectClaims(){
-            String token = jwtIssuer.generateAccessToken(1L);
+            UUID id = UUID.randomUUID();
+            String token = jwtIssuer.generateAccessToken(id);
 
             Claims parsed = parse(token);
 
             String tokenType = parsed.get("token_type", String.class);
-            Integer userId = parsed.get("user_id", Integer.class);
+            String userId = parsed.get("user_id", String.class);
 
             assertEquals("ACCESS_TOKEN", tokenType, "Token type must be equals");
-            assertEquals(1, userId, "UserId must be equals");
+            assertEquals(id.toString(), userId, "UserId must be equals");
         }
 
         @Test
         public void accessToken_shouldAddId(){
-            String token = jwtIssuer.generateAccessToken(1L);
+            String token = jwtIssuer.generateAccessToken(UUID.randomUUID());
 
             Claims parsed = parse(token);
 
@@ -93,7 +96,7 @@ public class JwtIssuerTest {
 
         @Test
         public void accessToken_shouldAddCorrectTtl(){
-            String token = jwtIssuer.generateAccessToken(1L);
+            String token = jwtIssuer.generateAccessToken(UUID.randomUUID());
 
             Claims parsed = parse(token);
 
@@ -104,7 +107,7 @@ public class JwtIssuerTest {
 
         @Test
         public void refreshToken_shouldAddCorrectTtl(){
-            String token = jwtIssuer.generateRefreshToken(1L);
+            String token = jwtIssuer.generateRefreshToken(UUID.randomUUID());
 
             Claims parsed = parse(token);
 
@@ -115,21 +118,23 @@ public class JwtIssuerTest {
 
         @Test
         public void refreshToken_shouldAddCorrectClaims(){
-            String token = jwtIssuer.generateRefreshToken(1L);
+            UUID id = UUID.randomUUID();
+            String token = jwtIssuer.generateRefreshToken(id);
 
             Claims parsed = parse(token);
 
             String tokenType = parsed.get("token_type", String.class);
-            Integer userId = parsed.get("user_id", Integer.class);
+            String userId = parsed.get("user_id", String.class);
 
             assertEquals("REFRESH_TOKEN", tokenType, "Token type must be equals");
-            assertEquals(1, userId, "UserId must be equals");
+            assertEquals(id.toString(), userId, "UserId must be equals");
         }
 
         @Test
         public void accessToken_checkUniquenessOfId(){
-            String firstToken = jwtIssuer.generateAccessToken(1L);
-            String secondToken = jwtIssuer.generateAccessToken(2L);
+            UUID id = UUID.randomUUID();
+            String firstToken = jwtIssuer.generateAccessToken(id);
+            String secondToken = jwtIssuer.generateAccessToken(id);
 
             Claims firstParsed = parse(firstToken);
             Claims secondParsed = parse(secondToken);

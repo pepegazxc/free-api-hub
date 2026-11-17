@@ -1,10 +1,9 @@
-package com.github.pepega.authentication;
+package com.github.pepega.authentication.user.service;
 
+import com.github.pepega.authentication.user.dto.AuthTokens;
 import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.entity.UserEntity;
 import com.github.pepega.authentication.user.repository.UsersRepository;
-import com.github.pepega.authentication.user.service.AuthService;
-import com.github.pepega.authentication.user.service.HashService;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +26,7 @@ public class AuthenticationTest {
     @Mock PasswordEncoder passwordEncoder;
     @Mock StringEncryptor stringEncryptor;
     @Mock UsersRepository usersRepository;
+    @Mock JwtService jwtService;
 
     @InjectMocks
     AuthService authService;
@@ -44,6 +44,9 @@ public class AuthenticationTest {
                 .thenReturn(Base64.getEncoder().encodeToString(cipherBytes));
         when(hashService.hash("test@x.com")).thenReturn(emailHash);
         when(passwordEncoder.encode("secret")).thenReturn("password-hash");
+        when(jwtService.saveTokens(any(UserEntity.class))).thenReturn(new AuthTokens(
+                "accessToken", "refreshToken"
+        ));
 
         authService.register(request);
 
