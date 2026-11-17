@@ -2,7 +2,7 @@ package com.github.pepega.authentication.user.service;
 
 import com.github.pepega.authentication.exception.exceptions.EmailAlreadyExistException;
 import com.github.pepega.authentication.exception.exceptions.UsernameAlreadyExistException;
-import com.github.pepega.authentication.user.dto.RegistrationRequest;
+import com.github.pepega.authentication.user.dto.AuthTokens;import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.entity.UserEntity;
 import com.github.pepega.authentication.user.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +24,10 @@ public class AuthService {
     private final StringEncryptor encryptor;
     private final PasswordEncoder passwordEncoder;
     private final HashService hashService;
+    private final JwtService jwtService;
 
     @Transactional
-    public void register(RegistrationRequest request){
+    public AuthTokens register(RegistrationRequest request){
         String normalizedEmail = normalizeString(request.email());
 
         byte[] cipherEmail = Base64.getDecoder().decode(encryptor.encrypt(normalizedEmail));
@@ -44,6 +45,8 @@ public class AuthService {
 
         usersRepository.saveAndFlush(user);
         log.info("User registered, userId={}", user.getId());
+
+        return jwtService.saveTokens(user);
     }
 
     private String normalizeString(String value){
