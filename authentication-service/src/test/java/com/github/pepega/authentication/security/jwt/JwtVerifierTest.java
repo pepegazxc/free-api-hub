@@ -78,25 +78,27 @@ public class JwtVerifierTest {
 
     @Test
     public void accessToken_success_shouldCorrectlyVerifyToken() {
-        String token = sign(validToken().subject("42").id("fixed-jti"));
+        String uuid = UUID.randomUUID().toString();
+        String token = sign(validToken().subject(uuid).id(uuid));
 
         TokenPayload result = jwtVerifier.parse(token, TokenType.ACCESS_TOKEN);
 
-        assertEquals(42L, result.userId());
-        assertEquals("fixed-jti", result.jti());
+        assertEquals(UUID.fromString(uuid), result.userId());
+        assertEquals(UUID.fromString(uuid), result.jti());
     }
 
     @Test
     public void refreshToken_success_shouldCorrectlyVerifyToken() {
+        String uuid = UUID.randomUUID().toString();
         String token = sign(validToken()
-                .subject("42")
-                .id("fixed-jti")
+                .subject(uuid)
+                .id(uuid)
                 .claim("token_type", "REFRESH_TOKEN"));
 
         TokenPayload result = jwtVerifier.parse(token, TokenType.REFRESH_TOKEN);
 
-        assertEquals(42L, result.userId());
-        assertEquals("fixed-jti", result.jti());
+        assertEquals(UUID.fromString(uuid), result.userId());
+        assertEquals(UUID.fromString(uuid), result.jti());
     }
 
     @Test

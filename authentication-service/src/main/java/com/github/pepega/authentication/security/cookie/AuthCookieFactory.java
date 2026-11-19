@@ -9,7 +9,7 @@ import java.time.Duration;
 public class AuthCookieFactory {
     private static final String ACCESS_TOKEN="access_token";
     private static final String REFRESH_TOKEN="refresh_token";
-    private static final String REFRESH_TOKEN_PATH="api/auth/refresh";
+    private static final String REFRESH_TOKEN_PATH="api/v1/auth/refresh";
     private static final String ACCESS_TOKEN_PATH="/";
 
     public ResponseCookie accessCookie(String token){

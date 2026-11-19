@@ -35,7 +35,7 @@ public class JwtIssuer {
                 .subject(userId.toString())
                 .claims(Map.of(
                         TokenType.CLAIM, tokenType,
-                        "user_id", userId.toString()
+                        "user_id", userId
                 ))
                 .id(UUID.randomUUID().toString())
                 .issuedAt(Date.from(now))

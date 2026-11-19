@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -51,17 +53,18 @@ public class JwtAuthenticationFilterTest {
 
     @Test
     void validToken_setsAuthenticationWithUserId() throws Exception {
+        UUID uuid = UUID.randomUUID();
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("Authorization", "Bearer good-token");
 
         when(verifier.parse("good-token", TokenType.ACCESS_TOKEN))
-                .thenReturn(new TokenPayload(42L, TokenType.ACCESS_TOKEN, "jti-1"));
+                .thenReturn(new TokenPayload(uuid, TokenType.ACCESS_TOKEN, uuid));
 
         filter.doFilter(request, new MockHttpServletResponse(), new MockFilterChain());
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         assertNotNull(auth);
-        assertEquals(42L, auth.getPrincipal());
+        assertEquals(uuid, auth.getPrincipal());
     }
 
     @Test

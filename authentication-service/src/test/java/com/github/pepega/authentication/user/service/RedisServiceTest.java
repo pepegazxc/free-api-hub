@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.redis.core.RedisTemplate;
 import com.github.pepega.authentication.security.config.JwtProperties;
+import org.springframework.data.redis.core.script.RedisScript;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -25,7 +26,9 @@ public class RedisServiceTest {
     @Mock
     private HashService hashService;
     @Mock(answer =  Answers.RETURNS_DEEP_STUBS)
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, byte[]> redisTemplate;
+    @Mock
+    private RedisScript<Long> redisScript;
 
     private JwtProperties jwtProperties;
 
@@ -35,7 +38,7 @@ public class RedisServiceTest {
     @BeforeEach
     void setUp(){
         jwtProperties = new JwtProperties("test", Duration.ofMinutes(15), Duration.ofDays(30), "keyPr", "keyPb");
-        redisService = new RedisService(redisTemplate, jwtProperties, hashService);
+        redisService = new RedisService(redisTemplate,redisScript, jwtProperties, hashService);
     }
 
     @Test

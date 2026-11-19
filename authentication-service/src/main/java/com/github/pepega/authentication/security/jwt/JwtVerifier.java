@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.security.PublicKey;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -41,9 +42,9 @@ public class JwtVerifier {
             }
 
             return new TokenPayload(
-                    Long.valueOf(claims.getSubject()),
+                    UUID.fromString(claims.getSubject()),
                     expectedType,
-                    claims.getId()
+                    UUID.fromString(claims.getId())
             );
         } catch (JwtException | IllegalArgumentException e){
             log.error("Jwt token exception occurred: message={}", e.getMessage(), e);
