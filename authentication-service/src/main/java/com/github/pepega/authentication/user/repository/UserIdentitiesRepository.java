@@ -1,0 +1,9 @@
+package com.github.pepega.authentication.user.repository;
+
+import com.github.pepega.authentication.user.entity.UserIdentities;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserIdentitiesRepository extends JpaRepository<UserIdentities, Long> {
+}

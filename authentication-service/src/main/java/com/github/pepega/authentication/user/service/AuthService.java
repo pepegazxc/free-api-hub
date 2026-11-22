@@ -5,6 +5,7 @@ import com.github.pepega.authentication.exception.exceptions.UsernameAlreadyExis
 import com.github.pepega.authentication.user.dto.AuthTokens;import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.entity.UserEntity;
 import com.github.pepega.authentication.user.entity.UserIdentities;
+import com.github.pepega.authentication.user.repository.UserIdentitiesRepository;
 import com.github.pepega.authentication.user.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.Locale;
 public class AuthService {
 
     private final UsersRepository usersRepository;
+    private final UserIdentitiesRepository userIdentitiesRepository;
     private final StringEncryptor encryptor;
     private final PasswordEncoder passwordEncoder;
     private final HashService hashService;
@@ -46,6 +48,7 @@ public class AuthService {
 
         UserIdentities userIdentities = UserIdentities.registerLocal(user);
 
+        userIdentitiesRepository.saveAndFlush(userIdentities);
         usersRepository.saveAndFlush(user);
         log.info("User registered, userId={}", user.getId());
 
