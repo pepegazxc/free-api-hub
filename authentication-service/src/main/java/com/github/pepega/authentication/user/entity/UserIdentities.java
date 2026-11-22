@@ -1,5 +1,6 @@
 package com.github.pepega.authentication.user.entity;
 
+import com.github.pepega.authentication.exception.exceptions.EmptyValueException;
 import com.github.pepega.authentication.user.model.ProviderName;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -37,6 +38,15 @@ public class UserIdentities {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
+    public static UserIdentities registerLocal(UserEntity user){
+        if (user == null) throw  new EmptyValueException("User cannot be empty", "UserEntity");
 
+        UserIdentities userIdentities = new UserIdentities();
+        userIdentities.user = user;
+        userIdentities.provider = ProviderName.LOCAL;
+        userIdentities.providerUserId = UUID.randomUUID().toString();
+
+        return userIdentities;
+    }
 
 }

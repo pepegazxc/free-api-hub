@@ -4,6 +4,7 @@ import com.github.pepega.authentication.exception.exceptions.EmailAlreadyExistEx
 import com.github.pepega.authentication.exception.exceptions.UsernameAlreadyExistException;
 import com.github.pepega.authentication.user.dto.AuthTokens;import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.entity.UserEntity;
+import com.github.pepega.authentication.user.entity.UserIdentities;
 import com.github.pepega.authentication.user.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,8 @@ public class AuthService {
                 cipherEmail,
                 passwordEncoder.encode(request.password())
         );
+
+        UserIdentities userIdentities = UserIdentities.registerLocal(user);
 
         usersRepository.saveAndFlush(user);
         log.info("User registered, userId={}", user.getId());
