@@ -1,5 +1,8 @@
 package com.github.pepega.authentication.user.service;
 
+import com.github.pepega.authentication.exception.exceptions.TokenRotateException;
+import com.github.pepega.authentication.exception.exceptions.UserNotFoundException;
+import com.github.pepega.authentication.exception.exceptions.UserStatusException;
 import com.github.pepega.authentication.security.jwt.JwtIssuer;
 import com.github.pepega.authentication.security.jwt.JwtVerifier;
 import com.github.pepega.authentication.security.model.TokenPayload;
@@ -39,13 +42,14 @@ public class JwtService {
     public AuthTokens rotateTokens(String refreshToken){
         TokenPayload payload = jwtVerifier.parse(refreshToken, TokenType.REFRESH_TOKEN);
         UUID userId = payload.userId();
+        log.info("Rotating tokens for user={}, token jti={}", userId, payload.jti());
 
         UserEntity user = usersRepository.findById(userId)
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new UserNotFoundException(userId.toString()));
 
         if (user.getStatus() == ProfileStatus.BLOCKED) {
             redisService.deleteToken(userId);
-            throw new IllegalStateException();
+            throw new UserStatusException("User status is Blocked");
         }
 
         String newAccessToken = jwtIssuer.generateAccessToken(userId);
@@ -57,7 +61,7 @@ public class JwtService {
 
         if (!rotated){
             redisService.deleteToken(userId);
-            throw new IllegalStateException();
+            throw new TokenRotateException();
         }
 
         return new AuthTokens(
