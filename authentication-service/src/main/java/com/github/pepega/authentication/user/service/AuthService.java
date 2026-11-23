@@ -28,6 +28,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final HashService hashService;
     private final JwtService jwtService;
+    private final EmailDomainValidatorService domainValidatorService;
 
     @Transactional
     public AuthTokens register(RegistrationRequest request){
@@ -37,7 +38,7 @@ public class AuthService {
         byte[] hashEmail = hashService.hash(normalizedEmail);
         String normalizedUsername = normalizeString(request.username());
 
-        checkForExistences(hashEmail, normalizedUsername);
+        checkForExistences(normalizedEmail ,hashEmail, normalizedUsername);
 
         UserEntity user = UserEntity.register(
                 normalizedUsername,
@@ -59,7 +60,8 @@ public class AuthService {
         return value.trim().toLowerCase(Locale.ROOT);
     }
 
-    private void checkForExistences(byte[] hashEmail, String username){
+    private void checkForExistences(String email,byte[] hashEmail, String username){
+        domainValidatorService.isEmailDomainValid(email);
         if(usersRepository.existsByHashEmail(hashEmail)) throw new EmailAlreadyExistException();
         if(usersRepository.existsByUsername(username)) throw new UsernameAlreadyExistException(username);
     }

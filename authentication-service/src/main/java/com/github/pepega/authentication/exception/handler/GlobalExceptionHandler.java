@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.naming.NameNotFoundException;
+
 import static com.github.pepega.authentication.exception.model.ConstraintError.CONSTRAINT_ERROR;
 
 @RestControllerAdvice
@@ -64,6 +66,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 "Unexpected error",
                 "An unexpected exception occurred. Try again later",
                 ExceptionCode.UNEXPECTED_ERROR
+        );
+    }
+
+    @ExceptionHandler(NameNotFoundException.class)
+    public ProblemDetail handleNameNotFoundException(NameNotFoundException e){
+        return buildProblemDetail(
+                HttpStatus.BAD_REQUEST,
+                "Incorrect email domain",
+                "An error occurred with entered email domain. Check it and try again",
+                ExceptionCode.INCORRECT_EMAIL_DOMAIN
         );
     }
 

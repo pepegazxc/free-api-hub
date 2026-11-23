@@ -12,6 +12,13 @@ spring:
     virtual:
       enabled: true
 
+  cache:
+    cache-names: mxRecords
+    redis:
+      time-to-live: 24h
+      cache-null-values: false
+
+
   # POSTGRESQL CONFIGURATION
   datasource:
     url: jdbc:postgresql://localhost:5433/auth_db
@@ -41,8 +48,9 @@ spring:
   # REDIS CONFIGURATION
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
       timeout: 2s
       lettuce:
         shutdown-timeout: 100ms
