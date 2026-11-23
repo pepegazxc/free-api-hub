@@ -9,8 +9,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.PublicKey;
+import java.util.Base64;
 
 @RestController
 @Slf4j
@@ -21,6 +25,7 @@ public class AuthenticationController {
     private final AuthService authService;
     private final AuthCookieFactory cookie;
     private final JwtService jwtService;
+    private final PublicKey publicKey;
 
     @PostMapping("/registration")
     public ResponseEntity<Void> registration(@Valid @RequestBody RegistrationRequest request){
@@ -48,5 +53,10 @@ public class AuthenticationController {
                 .header(HttpHeaders.SET_COOKIE, cookie.accessCookie(newToken.accessToken()).toString())
                 .header(HttpHeaders.SET_COOKIE, cookie.refreshCookie(newToken.refreshToken()).toString())
                 .build();
+    }
+
+    @GetMapping(value = "/public-key", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getPublicKey(){
+        return Base64.getEncoder().encodeToString(publicKey.getEncoded());
     }
 }
