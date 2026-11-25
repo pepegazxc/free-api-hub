@@ -1,15 +1,13 @@
 package com.github.pepega.authentication.user.service;
 
-import com.github.pepega.authentication.configuration.RedisScriptConfig;
 import com.github.pepega.authentication.exception.exceptions.RefreshTokenAlreadySavedException;
 import com.github.pepega.authentication.security.config.JwtProperties;
-import lombok.RequiredArgsConstructor;
+import com.github.pepega.authentication.security.service.HashService;import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Service;
 
-import java.security.MessageDigest;
 import java.util.List;
 import java.util.UUID;
 

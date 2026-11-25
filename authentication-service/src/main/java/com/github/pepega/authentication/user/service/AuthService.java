@@ -2,7 +2,7 @@ package com.github.pepega.authentication.user.service;
 
 import com.github.pepega.authentication.exception.exceptions.EmailAlreadyExistException;
 import com.github.pepega.authentication.exception.exceptions.UsernameAlreadyExistException;
-import com.github.pepega.authentication.user.dto.AuthTokens;import com.github.pepega.authentication.user.dto.RegistrationRequest;
+import com.github.pepega.authentication.security.service.HashService;import com.github.pepega.authentication.user.dto.AuthTokens;import com.github.pepega.authentication.user.dto.RegistrationRequest;
 import com.github.pepega.authentication.user.entity.UserEntity;
 import com.github.pepega.authentication.user.entity.UserIdentities;
 import com.github.pepega.authentication.user.repository.UserIdentitiesRepository;
@@ -60,7 +60,7 @@ public class AuthService {
         return value.trim().toLowerCase(Locale.ROOT);
     }
 
-    private void checkForExistences(String email,byte[] hashEmail, String username){
+    private void checkForExistences(String email, byte[] hashEmail, String username){
         domainValidatorService.isEmailDomainValid(email);
         if(usersRepository.existsByHashEmail(hashEmail)) throw new EmailAlreadyExistException();
         if(usersRepository.existsByUsername(username)) throw new UsernameAlreadyExistException(username);

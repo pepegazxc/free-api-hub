@@ -1,6 +1,7 @@
 package com.github.pepega.authentication.user.service;
 
 import com.github.pepega.authentication.exception.exceptions.RefreshTokenAlreadySavedException;
+import com.github.pepega.authentication.security.service.HashService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

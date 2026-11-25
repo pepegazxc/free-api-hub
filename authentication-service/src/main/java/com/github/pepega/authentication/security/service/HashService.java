@@ -1,4 +1,4 @@
-package com.github.pepega.authentication.user.service;
+package com.github.pepega.authentication.security.service;
 
 import com.github.pepega.authentication.exception.exceptions.HashException;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.HexFormat;
-import java.util.Locale;
 
 
 @Component
